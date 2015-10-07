@@ -1,10 +1,11 @@
 /*jshint node:true*/
 var express = require('express'),
-    app = express();
+    config  = require('config'),
+    app     = express();
 
 
 // Set Port
-app.set('PORT', (process.env.PORT || 5000));
+app.set('PORT', (process.env.PORT || config.port));
 
 // Server public routes
 app.use(express.static('public'));

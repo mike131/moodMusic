@@ -1,8 +1,10 @@
 /*jshint mocha:true, node:true */
 
-var chai = require('chai'),
-    expect = chai.expect,
-    spotify = require('../../../app/models/spotify');
+var chai      = require('chai'),
+    expect    = chai.expect,
+    request   = require('request'),
+    sinon     = require('sinon'),
+    spotify   = require('../../../app/models/spotify');
 
 describe("Spotify Model", function () {
 
@@ -45,5 +47,33 @@ describe("Spotify Model", function () {
     });
 
   });
+
+  describe("#isAuthorized() ", function () {
+
+    it("should not be authorized on instance", function () {
+      expect(spotify.isAuthorized()).to.equal(false);
+    });
+
+  });
+
+  // Sample test to see how Sinon + Request mock works
+  describe("#basicGet() ", function () {
+
+  });
+
+//  describe("#clientAuth() ", function () {
+//    var requestMock = {};
+//
+//    it("should return error if CLIENT_ID not set ", function () {
+//
+//    });
+//
+//    it("should get a response", function () {
+//      spotify.setClientId('Some Id');
+//      spotify.setClientSecret('Some secret');
+//      spotify.clientAuth();
+//    });
+//
+//  });
 
 });

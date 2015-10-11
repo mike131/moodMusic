@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "postinstall": "bower install",
     "test": "mocha --recursive"
   },
   "author": "Mike Lee <mikelee131@gmail.com>",

@@ -1,5 +1,4 @@
-# Mood Music
-
+## Mood Music
 [![Build Status](https://travis-ci.org/mike131/moodMusic.svg)](https://travis-ci.org/mike131/moodMusic)
 ---
 

@@ -56,24 +56,36 @@ describe("Spotify Model", function () {
 
   });
 
-  // Sample test to see how Sinon + Request mock works
-  describe("#basicGet() ", function () {
+  describe("#clientAuth() ", function () {
+
+    before(function (done) {
+      sinon
+        .stub(request, 'post')
+        .yields(null, {statusCode: 200}, JSON.stringify(
+        {
+          "access_token":"wefwefwefwefwef",
+          "token_type":"Bearer",
+          "expires_in":3600
+        }));
+      done();
+    });
+
+    after(function (done) {
+      request.post.restore();
+      done();
+    });
+
+    it("should not be authorized ", function () {
+      expect(spotify.isAuthorized()).to.equal(false);
+    });
+
+    it("should get a response", function () {
+      spotify.setClientId('Some Id');
+      spotify.setClientSecret('Some secret');
+      spotify.clientAuth();
+      expect(spotify.isAuthorized()).to.equal(true);
+    });
 
   });
-
-//  describe("#clientAuth() ", function () {
-//    var requestMock = {};
-//
-//    it("should return error if CLIENT_ID not set ", function () {
-//
-//    });
-//
-//    it("should get a response", function () {
-//      spotify.setClientId('Some Id');
-//      spotify.setClientSecret('Some secret');
-//      spotify.clientAuth();
-//    });
-//
-//  });
 
 });

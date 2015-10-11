@@ -1,5 +1,7 @@
 /*jshint node:true*/
+
 "use strict";
+
 var request = require('request');
 
 // Private variables
@@ -26,7 +28,8 @@ Spotify.prototype.setClientSecret = function (clientSecret) {
 
 Spotify.prototype.clientAuth = function (force) {
   if (!this.isAuthorized() || force === true && this.hasClientId() && this.hasClientSecret()) {
-    request({
+    var that = this;
+    request.post({
       method: SPOTIFY_ENDPOINTS.auth.method,
       url: SPOTIFY_ENDPOINTS.auth.url,
       headers: {
@@ -42,21 +45,11 @@ Spotify.prototype.clientAuth = function (force) {
 
       // No error
       if (res.statusCode === 200) {
-        this.auth = JSON.parse(body);
+        that.auth = JSON.parse(body);
       }
     });
   }
 };
-
-Spotify.prototype.basicGet = function () {
-  request({
-    method: 'GET'
-  }, function (err, res, body) {
-
-  });
-};
-
-// Private functions
 
 // Checkers
 Spotify.prototype.hasClientId = function () {

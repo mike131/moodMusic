@@ -30,7 +30,7 @@ describe("Spotify Model", function () {
 
   });
 
-  describe("#setClientId() ", function () {
+  describe("Method: setClientId() ", function () {
 
     it("should be able to set private property CLIENT_ID", function () {
       spotify.setClientId('Some Client Id');
@@ -39,7 +39,7 @@ describe("Spotify Model", function () {
 
   });
 
-  describe("#setClientSecret() ", function () {
+  describe("Method: setClientSecret() ", function () {
 
     it("should be able to set private property CLIENT_SECRET", function () {
       spotify.setClientSecret('Some Secret');
@@ -48,7 +48,7 @@ describe("Spotify Model", function () {
 
   });
 
-  describe("#isAuthorized() ", function () {
+  describe("Method: isAuthorized() ", function () {
 
     it("should not be authorized on instance", function () {
       expect(spotify.isAuthorized()).to.equal(false);
@@ -56,34 +56,65 @@ describe("Spotify Model", function () {
 
   });
 
-  describe("#clientAuth() ", function () {
-
-    before(function (done) {
-      sinon
-        .stub(request, 'post')
-        .yields(null, {statusCode: 200}, JSON.stringify(
-        {
-          "access_token":"wefwefwefwefwef",
-          "token_type":"Bearer",
-          "expires_in":3600
-        }));
-      done();
-    });
-
-    after(function (done) {
-      request.post.restore();
-      done();
-    });
+  describe("Method: clientAuth() ", function () {
 
     it("should not be authorized ", function () {
       expect(spotify.isAuthorized()).to.equal(false);
     });
 
-    it("should get a response", function () {
-      spotify.setClientId('Some Id');
-      spotify.setClientSecret('Some secret');
-      spotify.clientAuth();
-      expect(spotify.isAuthorized()).to.equal(true);
+    describe("successful auth call ", function () {
+
+      before(function (done) {
+        sinon
+          .stub(request, 'post')
+          .yields(null, {statusCode: 200}, JSON.stringify(
+          {
+            "access_token":"wefwefwefwefwef",
+            "token_type":"Bearer",
+            "expires_in":3600
+          }));
+        done();
+      });
+
+      after(function (done) {
+        request.post.restore();
+        done();
+      });
+
+      it("should set auth object on successful response", function () {
+        spotify.setClientId('Some Id');
+        spotify.setClientSecret('Some secret');
+        spotify.clientAuth();
+        expect(spotify.isAuthorized()).to.equal(true);
+      });
+
+    });
+
+    describe("error on auth call", function () {
+
+      before(function (done) {
+        sinon
+          .stub(request, 'post')
+          .yields(true, {statusCode: 401}, JSON.stringify(
+          {
+            "error":"invalid_client",
+            "error_description":"Invalid client secret"
+        }));
+        done();
+      });
+
+      after(function (done) {
+        request.post.restore();
+        done();
+      });
+
+      it("should throw an error", function () {
+        spotify.setClientId('Some Id');
+        spotify.setClientSecret('Some secret');
+        spotify.clientAuth();
+        expect(spotify.isAuthorized()).to.equal(false);
+      });
+
     });
 
   });

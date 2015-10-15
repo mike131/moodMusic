@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "postinstall": "bower install",
     "test": "mocha --recursive"
   },
   "author": "Mike Lee <mikelee131@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "bower": "^1.5.3",
     "config": "^1.16.0",
     "express": "^4.13.3",
     "request": "^2.64.0"

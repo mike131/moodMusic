@@ -4,7 +4,7 @@ var chai      = require('chai'),
     expect    = chai.expect,
     request   = require('request'),
     sinon     = require('sinon'),
-    spotify   = require('../../../app/models/spotify');
+    spotify   = require('./../../../../server/models/spotify');
 
 describe("Spotify Model", function () {
 

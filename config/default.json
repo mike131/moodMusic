@@ -1,5 +1,0 @@
-{
-  "port": 5000,
-  "app_path": "./app/",
-  "model_path": "./app/models/"
-}

@@ -111,8 +111,7 @@ describe("Spotify Model", function () {
       it("should throw an error", function () {
         spotify.setClientId('Some Id');
         spotify.setClientSecret('Some secret');
-        spotify.clientAuth();
-        expect(spotify.isAuthorized()).to.equal(false);
+        expect(spotify.clientAuth.bind(spotify, true)).to.throw("Invalid client secret");
       });
 
     });

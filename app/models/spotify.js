@@ -40,7 +40,8 @@ Spotify.prototype.clientAuth = function (force) {
       }
     }, function (err, res, body) {
       if (err) {
-        throw (err);
+        var returnBody = JSON.parse(body);
+        throw new Error(returnBody.error_description);
       }
 
       // No error

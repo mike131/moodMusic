@@ -116,6 +116,6 @@ describe("Spotify Model", function () {
 
     });
 
-  });
+  }); // Client Auth()
 
 });
